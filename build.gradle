@@ -1,38 +1,51 @@
 group 'Vadoniy'
 version '1.0-SNAPSHOT'
 
-task wrapper(type: Wrapper) {
-  gradleVersion = '3.3'
-  distributionUrl = "https://services.gradle.org/distributions/gradle-$gradleVersion-all.zip"
-}
-
-apply plugin: 'java'
-
-sourceCompatibility = 1.8
-
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
-}
-
 subprojects{
     apply plugin: 'java'
+
+    repositories {
+        mavenCentral()
+        mavenLocal()
+    }
+
+    dependencies{
+        compile group: 'org.springframework', name: 'spring-context', version: '4.3.7.RELEASE'
+
+        testCompile group: 'junit', name: 'junit', version: '4.12'
+    }
 }
 
 project(':common') {
-}
-
-project(':server-core') {
+    dependencies{
+        compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.6'
+    }
 }
 
 project(':tracker-core') {
+    dependencies{
+        compile project(':common')
+        compile group: 'de.micromata.jak', name: 'JavaAPIforKml', version: '2.2.1'
+        compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
+        compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.2'
+    }
 }
 
-project(':server-ui') {
+project(':server-core') {
+//    apply plugin: 'java-library-distribution'
+    dependencies{
+        compile project(':common')
+    }
 }
 
 project(':tracker-ui') {
+    dependencies{
+        compile project(':common')
+    }
+}
+
+project(':server-ui'){
+    dependencies{
+        compile project(':common')
+    }
 }
