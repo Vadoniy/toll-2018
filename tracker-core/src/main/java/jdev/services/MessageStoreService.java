@@ -2,6 +2,8 @@ package jdev.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import dto.PointDTO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -13,10 +15,13 @@ import java.util.concurrent.LinkedBlockingDeque;
 @Service
 public class MessageStoreService {
 
+    private static final Logger logger = LoggerFactory.getLogger(MessageStoreService.class);
+
     private BlockingDeque<PointDTO> queue = new LinkedBlockingDeque<>();
 
-    public void addPoint(double lat, double lon, String autoId, long time, double azimuth, double speed) throws InterruptedException {
-        queue.put(new PointDTO(lat, lon, autoId, time, azimuth, speed));
+    public void addPoint(double lat, double lon, String autoId, long time) throws InterruptedException {
+        logger.info("Message Store Server receives new point");
+        queue.put(new PointDTO(lat, lon, autoId, time));
     }
 
     public Queue<PointDTO> getQueue(){

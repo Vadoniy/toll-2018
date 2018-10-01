@@ -21,6 +21,9 @@ public class SendMessageService {
     @PostConstruct
     @Scheduled(fixedDelay = 3000)
     public void sendMessageToServer() throws JsonProcessingException {
+        log.info("Send Message Service sends points set to Server");
+
+        //Далее нужно отправить на сервер, а не просто залоггировать
         for (PointDTO p : messageStoreService.getQueue()){
             log.info(p.toJson());
             messageStoreService.getQueue().remove();

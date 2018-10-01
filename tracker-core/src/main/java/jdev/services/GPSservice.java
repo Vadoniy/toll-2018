@@ -1,5 +1,9 @@
 package jdev.services;
 
+import de.micromata.opengis.kml.v_2_2_0.Coordinate;
+import de.micromata.opengis.kml.v_2_2_0.Kml;
+import de.micromata.opengis.kml.v_2_2_0.LineString;
+import de.micromata.opengis.kml.v_2_2_0.Placemark;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,18 +11,21 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.io.File;
+import java.util.List;
 
 @Service
 public class GPSservice {
 
-
-    private double lat = 52.0278200;
-    private double lon = 47.8007000;
-    private double speed = 60.0;
     private static String autoID = "r934sk";
-    private double azimuth = 155.0;
 
     private static Logger logger = LoggerFactory.getLogger(GPSservice.class);
+
+    final Kml kml = Kml.unmarshal(new File("C:\\Users\\vadon\\IdeaProjects\\TUSUR\\toll-2018\\tracker-core\\src\\main\\resources\\track.kml"));
+    final Placemark placemark = (Placemark) kml.getFeature();
+    LineString point = (LineString) placemark.getGeometry();
+    List<Coordinate> coordinates = point.getCoordinates();
+    int i = 0;
 
     @Autowired
     private MessageStoreService messageStoreService;
@@ -26,7 +33,21 @@ public class GPSservice {
     @PostConstruct
     @Scheduled (fixedDelay = 1000)
     private void init() throws Exception{
-        messageStoreService.addPoint(lat, lon, autoID, System.nanoTime(), azimuth, speed);
-        logger.info("GPSService sent data");
+
+        if (i < coordinates.toArray().length){
+            messageStoreService.addPoint(coordinates.get(i).getLatitude(),
+                    coordinates.get(i).getLongitude(), autoID, System.nanoTime());
+            i++;
+        } else {
+            logger.info("GPSService sent data");
+        }
+
+        /*while (i < coordinates.toArray().length){
+            messageStoreService.addPoint(coordinates.get(i).getLatitude(),
+                    coordinates.get(i).getLongitude(), autoID, System.nanoTime());
+            i++;
+        }*/
+
+//        logger.info("GPSService sent data");
     }
 }

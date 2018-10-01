@@ -1,7 +1,13 @@
 package jdev.application;
 
-/**
- * Created by Vadoniy on 22.09.2018.
- */
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
+
+@SpringBootApplication
+@ComponentScan({"context", "services"})
 public class Application {
+    public static void main(String[] args) {
+        SpringApplication.run(Main.class, args);
+    }
 }

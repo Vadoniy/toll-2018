@@ -1,3 +1,5 @@
+package dto;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -6,6 +8,14 @@ public class PointDTO {
     private double lat;
     private double lon;
     private String autoId;
+    private long time;
+
+    public PointDTO(double lat, double lon, String autoId, long time) {
+        this.lat = lat;
+        this.lon = lon;
+        this.autoId = autoId;
+        this.time = time;
+    }
 
     public double getLat() {
         return lat;
@@ -29,6 +39,14 @@ public class PointDTO {
 
     public void setAutoId(String autoId) {
         this.autoId = autoId;
+    }
+
+    public long getTime() {
+        return time;
+    }
+
+    public void setTime(long time) {
+        this.time = time;
     }
 
     public String toJson() throws JsonProcessingException {
