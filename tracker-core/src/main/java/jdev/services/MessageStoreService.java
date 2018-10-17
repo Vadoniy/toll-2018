@@ -29,13 +29,10 @@ public class MessageStoreService {
     }
 
     public List<String> takePoint() throws InterruptedException, JsonProcessingException {
-
         List<String> points = new ArrayList<>();
-
         while (!queue.isEmpty()){
             points.add(queue.take().toJson());
         }
-
         return points;
     }
 

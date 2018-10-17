@@ -17,15 +17,8 @@ public class PointDTOTestTC {
 
     @Test
     public void toJson() throws JsonProcessingException {
-        PointDTO point = new PointDTO();
-
-        point.setLat(17);
-        point.setLon(11);
-        point.setAutoId("P934CK777");
-        point.setTime(System.currentTimeMillis());
-
-        assertTrue(point.toJson().contains("\"autoId\":\"P934CK"));
-        System.out.println(point.toJson());
+        PointDTO point = new PointDTO(17, 11, "Р934СК", System.currentTimeMillis());
+        assertTrue(point.toJson().contains("\"autoId\":\"Р934СК\""));
     }
 
     @Test
@@ -35,9 +28,9 @@ public class PointDTOTestTC {
     }
 
     @Test
-    public void checkTime() throws IOException {
+    public void checkAutoId() throws IOException {
         PointDTO point = new ObjectMapper().readValue(expected, PointDTO.class);
-        assertTrue(point.toJson().contains("time"));
+        assertTrue(point.toJson().contains("autoId"));
         System.out.println(point.toJson());
     }
 }

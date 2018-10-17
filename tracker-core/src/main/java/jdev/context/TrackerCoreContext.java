@@ -1,5 +1,6 @@
-package jdev;
+package jdev.context;
 
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.TaskScheduler;
@@ -8,6 +9,7 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import jdev.services.GPSservice;
 import jdev.services.MessageStoreService;
 import jdev.services.SendMessageService;
+import org.springframework.web.client.RestTemplate;
 
 /**
  * Created by Vadoniy on 31.07.2018.
@@ -30,6 +32,13 @@ public class TrackerCoreContext {
     @Bean
     public SendMessageService sendMessageService(){
         return new SendMessageService();
+    }
+
+    @Bean
+//    public RestTemplate restTemplate(RestTemplateBuilder builder) {
+    public RestTemplate restTemplate() {
+        return new RestTemplateBuilder().build();
+//        return builder.build();
     }
 
     @Bean

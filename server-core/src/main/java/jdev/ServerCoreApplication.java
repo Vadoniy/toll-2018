@@ -1,13 +1,13 @@
-package jdev.application;
+package jdev;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan({"jdev.context", "jdev.services"})
-public class Application {
+@ComponentScan("jdev.controllers")
+public class ServerCoreApplication {
     public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+        SpringApplication.run(ServerCoreApplication.class, args);
     }
 }

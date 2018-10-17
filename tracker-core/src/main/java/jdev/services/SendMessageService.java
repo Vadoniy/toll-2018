@@ -7,8 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.PostConstruct;
+import org.springframework.web.client.RestTemplate;
 
 @Service
 public class SendMessageService {
@@ -18,14 +17,16 @@ public class SendMessageService {
     @Autowired
     private MessageStoreService messageStoreService;
 
-    @PostConstruct
+    @Autowired
+    RestTemplate restTemplate;
+
     @Scheduled(fixedDelay = 3000)
     public void sendMessageToServer() throws JsonProcessingException {
         log.info("Send Message Service sends points set to Server");
 
-        //Далее нужно отправить на сервер, а не просто залоггировать
         for (PointDTO p : messageStoreService.getQueue()){
             log.info(p.toJson());
+            restTemplate.postForObject("http://localhost:8080/pointDTO", p, PointDTO.class);
             messageStoreService.getQueue().remove();
         }
     }

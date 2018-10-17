@@ -21,7 +21,7 @@ public class GPSservice {
 
     private static Logger logger = LoggerFactory.getLogger(GPSservice.class);
 
-    final Kml kml = Kml.unmarshal(new File("C:\\Users\\vadon\\IdeaProjects\\TUSUR\\toll-2018\\tracker-core\\src\\main\\resources\\track.kml"));
+    final Kml kml = Kml.unmarshal(new File("src//main//resources//track.kml"));
     final Placemark placemark = (Placemark) kml.getFeature();
     LineString point = (LineString) placemark.getGeometry();
     List<Coordinate> coordinates = point.getCoordinates();
@@ -34,20 +34,14 @@ public class GPSservice {
     @Scheduled (fixedDelay = 1000)
     private void init() throws Exception{
 
+        logger.info("GPSservice generated point");
+
         if (i < coordinates.toArray().length){
             messageStoreService.addPoint(coordinates.get(i).getLatitude(),
                     coordinates.get(i).getLongitude(), autoID, System.nanoTime());
             i++;
         } else {
-            logger.info("GPSService sent data");
+            logger.info("Track is finished.");
         }
-
-        /*while (i < coordinates.toArray().length){
-            messageStoreService.addPoint(coordinates.get(i).getLatitude(),
-                    coordinates.get(i).getLongitude(), autoID, System.nanoTime());
-            i++;
-        }*/
-
-//        logger.info("GPSService sent data");
     }
 }
