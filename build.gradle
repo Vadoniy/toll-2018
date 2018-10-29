@@ -39,8 +39,8 @@ project(':tracker-core') {
 
     dependencies{
         compile project(':common')
-        compile("org.springframework.boot:spring-boot-starter-thymeleaf")
         compile("org.springframework.boot:spring-boot-devtools")
+        compile("org.springframework.boot:spring-boot-starter-thymeleaf")
         compile group: 'de.micromata.jak', name: 'JavaAPIforKml', version: '2.2.1'
 
         testCompile("org.springframework.boot:spring-boot-starter-test")
@@ -53,8 +53,8 @@ project(':server-core') {
 
     dependencies{
         compile project(':common')
-        compile("org.springframework.boot:spring-boot-starter-thymeleaf")
         compile("org.springframework.boot:spring-boot-devtools")
+        compile("org.springframework.boot:spring-boot-starter-thymeleaf")
 
         testCompile("org.springframework.boot:spring-boot-starter-test")
     }
@@ -67,7 +67,13 @@ project(':tracker-ui') {
 }
 
 project(':server-ui'){
+
+    apply plugin: 'org.springframework.boot'
+
     dependencies{
         compile project(':common')
+
+        compile("org.springframework.boot:spring-boot-starter-thymeleaf")
+        compile("org.springframework.boot:spring-boot-starter-security")
     }
 }
