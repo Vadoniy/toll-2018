@@ -11,10 +11,6 @@ import jdev.services.MessageStoreService;
 import jdev.services.SendMessageService;
 import org.springframework.web.client.RestTemplate;
 
-/**
- * Created by Vadoniy on 31.07.2018.
- */
-
 @Configuration
 @EnableScheduling
 public class TrackerCoreContext {
@@ -35,10 +31,8 @@ public class TrackerCoreContext {
     }
 
     @Bean
-//    public RestTemplate restTemplate(RestTemplateBuilder builder) {
     public RestTemplate restTemplate() {
         return new RestTemplateBuilder().build();
-//        return builder.build();
     }
 
     @Bean
