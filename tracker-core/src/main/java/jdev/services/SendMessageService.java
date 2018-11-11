@@ -9,10 +9,15 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class SendMessageService {
 
     private static final Logger log = LoggerFactory.getLogger(SendMessageService.class);
+    private static String pointDataLog = "PointDTO %s: %s";
+    private static int counterPoints = 0;
 
     @Autowired
     private MessageStoreService messageStoreService;
@@ -21,13 +26,17 @@ public class SendMessageService {
     RestTemplate restTemplate;
 
     @Scheduled(fixedDelay = 3000)
-    public void sendMessageToServer() throws JsonProcessingException {
+    public List<PointDTO> sendMessageToServer() throws JsonProcessingException {
         log.info("Send Message Service sends points set to Server");
 
+        List<PointDTO> pointDTOList = new ArrayList<>();
+
         for (PointDTO p : messageStoreService.getQueue()){
-            log.info(p.toJson());
-            restTemplate.postForObject("http://localhost:8080/pointDTO", p, PointDTO.class);
+            log.info(String.format(pointDataLog, counterPoints, p.toJson()));
+            pointDTOList.add(restTemplate.postForObject("http://localhost:8080/pointDTO", p, PointDTO.class));
             messageStoreService.getQueue().remove();
+            counterPoints++;
         }
+        return pointDTOList;
     }
 }

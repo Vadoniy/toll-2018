@@ -17,7 +17,7 @@ import java.util.List;
 @Service
 public class GPSservice {
 
-    private static String autoID = "r934sk";
+    private static String autoID = "R934SK";
 
     private static Logger logger = LoggerFactory.getLogger(GPSservice.class);
 

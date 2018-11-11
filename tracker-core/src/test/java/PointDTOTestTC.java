@@ -24,13 +24,12 @@ public class PointDTOTestTC {
     @Test
     public void decodeDto() throws IOException {
         PointDTO point = new ObjectMapper().readValue(expected, PointDTO.class);
-        assertEquals(point.getAutoId(), autoId);
+        assertEquals(autoId, point.getAutoId());
     }
 
     @Test
     public void checkAutoId() throws IOException {
         PointDTO point = new ObjectMapper().readValue(expected, PointDTO.class);
         assertTrue(point.toJson().contains("autoId"));
-        System.out.println(point.toJson());
     }
 }
