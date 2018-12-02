@@ -7,3 +7,4 @@ gradle/
 gradlew
 gradlew.bat
 !/.gitignore
+/server-core/trackOutput.txt
